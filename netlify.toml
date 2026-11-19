@@ -1,0 +1,23 @@
+# QR Shield is a plain static site (HTML/CSS/vanilla JS) with no framework,
+# no package manager and no dependencies to install.
+#
+# The source files have no extensions (`html`, `css`, `jss`) and there is no
+# index.html. Without extensions the CDN serves them as
+# application/octet-stream, so browsers download the page and refuse the
+# stylesheet and script. The build step copies them into `dist/` with proper
+# extensions; the app's source files are left untouched.
+[build]
+  command = "rm -rf dist && mkdir -p dist && cp html dist/index.html && cp css dist/styles.css && cp jss dist/app.js"
+  publish = "dist"
+
+# The page links to `css` and `jss` (relative to the root), so map those URLs
+# to the renamed files.
+[[redirects]]
+  from = "/css"
+  to = "/styles.css"
+  status = 200
+
+[[redirects]]
+  from = "/jss"
+  to = "/app.js"
+  status = 200
